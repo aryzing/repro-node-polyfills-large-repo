@@ -18,6 +18,8 @@ import { ThemeSwitcherProvider } from './common/theme-provider';
 
 const reactQueryDevToolsEnabled = process.env.REACT_QUERY_DEVTOOLS_ENABLED === 'true';
 
+console.log('foo');
+
 const ColorModeProvider = ColorModeProviderLegacy as any;
 
 export function App() {

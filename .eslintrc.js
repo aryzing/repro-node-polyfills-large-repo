@@ -2,9 +2,9 @@ const avoidWindowOpenMsg = 'Use `openInNewTab` helper';
 
 module.exports = {
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: './tsconfig.json',
-  },
+  // parserOptions: {
+  //   project: './tsconfig.json',
+  // },
   env: {
     browser: true,
     node: true,

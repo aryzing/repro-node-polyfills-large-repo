@@ -1,7 +1,4 @@
-/**
- * @typedef {import('@schemastore/web-manifest').JSONSchemaForWebApplicationManifestFiles} Manifest
- */
-const deepMerge = require('deepmerge');
+import deepMerge from 'deepmerge';
 
 const IS_DEV = process.env.WALLET_ENVIRONMENT === 'development';
 
@@ -113,7 +110,7 @@ const prodManifest = {
   },
 };
 
-function generateManifest(packageVersion) {
+export function generateManifest(packageVersion) {
   if (!packageVersion)
     throw new Error('Version number must be passed to `generateManifest` function');
 
@@ -131,5 +128,3 @@ function generateManifest(packageVersion) {
     environmentIcons[WALLET_ENVIRONMENT],
   ]);
 }
-
-module.exports = generateManifest;
