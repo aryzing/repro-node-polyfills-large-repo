@@ -1,5 +1,5 @@
 import { Box } from '@stacks/ui';
-import { sanitize } from 'dompurify';
+import purify from 'dompurify';
 
 interface CollectibleTextLayoutProps {
   children: string;
@@ -27,7 +27,7 @@ export function CollectibleTextLayout({ children }: CollectibleTextLayoutProps) 
       }}
       width="100%"
     >
-      <pre>{sanitize(children)}</pre>
+      <pre>{purify.sanitize(children)}</pre>
     </Box>
   );
 }

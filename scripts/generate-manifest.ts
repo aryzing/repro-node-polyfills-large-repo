@@ -10,9 +10,9 @@ const TARGET_BROWSER = process.env.TARGET_BROWSER ?? 'chromium';
 
 function generateImageAssetUrlsWithSuffix(suffix = '') {
   return {
-    128: `assets/connect-logo/Stacks128w${suffix}.png`,
-    256: `assets/connect-logo/Stacks256w${suffix}.png`,
-    512: `assets/connect-logo/Stacks512w${suffix}.png`,
+    128: `/assets/connect-logo/Stacks128w${suffix}.png`,
+    256: `/assets/connect-logo/Stacks256w${suffix}.png`,
+    512: `/assets/connect-logo/Stacks512w${suffix}.png`,
   };
 }
 
@@ -32,14 +32,14 @@ const contentSecurityPolicyEnvironment = {
 };
 
 const defaultIconEnvironment = {
-  development: 'assets/connect-logo/Stacks128w-dev.png',
-  production: 'assets/connect-logo/Stacks128w.png',
+  development: {"128": '/assets/connect-logo/Stacks128w-dev.png'},
+  production: {"128": '/assets/connect-logo/Stacks128w.png'},
 };
 
 const browserSpecificConfig = {
   firefox: {
     background: {
-      scripts: ['background.js'],
+      scripts: ['src/background/background.ts'],
     },
     browser_specific_settings: {
       gecko: {
@@ -49,7 +49,7 @@ const browserSpecificConfig = {
   },
   chromium: {
     background: {
-      service_worker: 'background.js',
+      service_worker: 'src/background/background.ts',
       type: 'module',
     },
   },
@@ -58,7 +58,7 @@ const browserSpecificConfig = {
 /**
  * @type {Manifest} manifest
  */
-const manifest = {
+const baseManifest = {
   manifest_version: 3,
   author: 'Hiro PBC',
   description:
@@ -80,7 +80,7 @@ const manifest = {
   web_accessible_resources: [{ resources: ['inpage.js'], matches: ['*://*/*'] }],
   action: {
     default_title: 'Hiro Wallet',
-    default_popup: 'popup.html',
+    default_popup: 'src/popup/popup.html',
     default_icon: defaultIconEnvironment[WALLET_ENVIRONMENT],
   },
   options_ui: {
@@ -89,7 +89,7 @@ const manifest = {
   },
   content_scripts: [
     {
-      js: ['content-script.js'],
+      js: ['src/content-scripts/content-script.ts'],
       matches: ['*://*/*'],
       all_frames: true,
     },
@@ -106,7 +106,7 @@ const prodManifest = {
   name,
   icons: generateImageAssetUrlsWithSuffix(PREVIEW_RELEASE ? '-preview' : ''),
   action: {
-    default_icon: `assets/connect-logo/Stacks128w${PREVIEW_RELEASE ? '-preview' : ''}.png`,
+    default_icon: {"128": `/assets/connect-logo/Stacks128w${PREVIEW_RELEASE ? '-preview' : ''}.png`},
   },
 };
 
@@ -120,11 +120,15 @@ export function generateManifest(packageVersion) {
 
   const browserConfig = browserSpecificConfig[TARGET_BROWSER];
 
-  return deepMerge.all([
+  const manifest = deepMerge.all([
     { version },
-    manifest,
+    baseManifest,
     releaseEnvironmentConfig,
     browserConfig,
     environmentIcons[WALLET_ENVIRONMENT],
   ]);
+
+  console.log(JSON.stringify(manifest, null, 2));
+  
+  return manifest
 }

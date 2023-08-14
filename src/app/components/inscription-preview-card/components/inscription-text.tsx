@@ -1,5 +1,5 @@
 import { Box, Spinner, Text } from '@stacks/ui';
-import { sanitize } from 'dompurify';
+import purify from 'dompurify';
 
 import { figmaTheme } from '@app/common/utils/figma-theme';
 import { useTextInscriptionContentQuery } from '@app/query/bitcoin/ordinals/use-text-ordinal-content.query';
@@ -34,7 +34,7 @@ export function InscriptionText(props: InscriptionTextProps) {
         backgroundImage: 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,1))',
       }}
     >
-      <Text>{sanitize(query.data)}</Text>
+      <Text>{purify.sanitize(query.data)}</Text>
     </Box>
   );
 }
