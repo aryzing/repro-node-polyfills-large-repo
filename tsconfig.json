@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "commonjs",
+    "module": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "react-jsx",
     "sourceMap": true,
@@ -22,7 +22,7 @@
     "resolveJsonModule": true,
     "baseUrl": "src",
     "paths": {
-      "@assets/*": ["../public/assets/*"],
+      "@assets/*": ["../assets/*"],
       "@shared/*": ["shared/*"],
       "@background/*": ["background/*"],
       "@content-scripts/*": ["content-scripts/*"],

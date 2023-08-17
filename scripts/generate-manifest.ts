@@ -128,7 +128,5 @@ export function generateManifest(packageVersion) {
     environmentIcons[WALLET_ENVIRONMENT],
   ]);
 
-  console.log(JSON.stringify(manifest, null, 2));
-  
   return manifest
 }
